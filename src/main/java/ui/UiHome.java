@@ -29,9 +29,12 @@ public class UiHome {
                     break;
                 case 2:
                     UiShipMenu.viewShips();
+                    System.out.println("5. To see the menu again");
                     System.out.print("Option: ");
                     break;
                 case 3:
+                    clearView();
+                    System.out.println("5. To see the menu again");
                     System.out.println("Version: 1.0");
                     System.out.println("Creator: Camilo Beltrán");
                     System.out.println("Support: support@camilo.com");
@@ -42,7 +45,13 @@ public class UiHome {
                     System.out.println("Program closed, come back soon [zzz]");
                     response = 0;
                     break;
+                case 5:
+                    clearView();
+                    menuBody();
+                    break;
                 default:
+                    clearView();
+                    System.out.println("5. To see the menu again");
                     System.out.println("Try to enter a correct option [?]");
                     System.out.print("Option: ");
             }
@@ -69,7 +78,7 @@ public class UiHome {
     /**
      * Method with several line breaks to clean the console
      */
-    private static void clearView() {
+    protected static void clearView() {
         System.out.println();
         System.out.println();
         System.out.println();

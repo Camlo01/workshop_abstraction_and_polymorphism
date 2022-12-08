@@ -17,14 +17,7 @@ public class UiShipMenu {
      */
     public static void shipMenu() {
         int response = 0;
-        System.out.println();
-        System.out.println("------------------ 1. Ship --------------------");
-        System.out.println("- What do you want to do");
-        System.out.println("---");
-        System.out.println("1. Create a spacecraft");
-        System.out.println("2. See ships");
-        System.out.println("3. Back to home");
-        System.out.print("Option: ");
+        shipMenuBody();
 
         do {
             Scanner inputOption = new Scanner(System.in);
@@ -32,23 +25,46 @@ public class UiShipMenu {
 
             switch (response) {
                 case 1:
+                    UiHome.clearView();
                     createShip();
                     response = 0;
                     break;
                 case 2:
+                    UiHome.clearView();
                     viewShips();
+                    System.out.println("4. To see the menu again");
                     System.out.print("Option: ");
                     break;
                 case 3:
-                    System.out.println();
-                    System.out.println();
-                    System.out.println();
+                    UiHome.clearView();
                     UiHome.showMenu();
                     response = 0;
                     break;
+                case 4:
+                    UiHome.clearView();
+                    shipMenuBody();
+                    break;
+                default:
+                    UiHome.clearView();
+                    System.out.println("4. To see the menu again");
+                    System.out.println("Try to enter a correct option [?]");
+                    System.out.print("Option: ");
             }
 
         } while (response != 0);
+
+    }
+
+    private static void shipMenuBody() {
+        System.out.println();
+        System.out.println("------------------ 1. Ship --------------------");
+        System.out.println("- What do you want to do");
+        System.out.println("---");
+        System.out.println("1. Create a spacecraft");
+        System.out.println("2. See ships");
+        System.out.println("3. Back to home");
+        System.out.println();
+        System.out.print("Option: ");
 
     }
 
@@ -59,75 +75,23 @@ public class UiShipMenu {
 
         Scanner input = new Scanner(System.in);
 
-        String name;
-        int startActivity;
-        Integer endActivity = null;
-        String nationality;
-        String description;
+        UiHome.clearView();
 
-        int kindOfShip = 0;
-        Integer status = 0;
-
-        System.out.println("----------------");
-        System.out.println("----------------");
-        System.out.println("----------------");
         System.out.println();
         System.out.println("--------------- Creating Ship -----------------");
-        System.out.println("Answer the questions first");
+        System.out.println("Complete the fields");
         System.out.println();
 
-//        Type of vehicle
-        System.out.println("Select the type of vehicle to create");
-        System.out.println("1. Capsule ");
-        System.out.println("2. Manned Spaceship ");
-        System.out.println("3. Space shuttle");
-        System.out.println("4. Unmanned SpaceShip");
-        System.out.print("Option: ");
-        kindOfShip = Integer.parseInt(input.nextLine());
-
-//        Name of vehicle
-        System.out.println("Write the name of the vehicle");
-        System.out.print("Name: ");
-        name = input.nextLine();
-
-//        Year of vehicle started
-        System.out.println("Write the year of start vehicle");
-        System.out.print("Year: ");
-        startActivity = Integer.parseInt(input.nextLine());
+        //Variables of object to create
+        int kindOfShip = whatKindOfShip(input);
+        String name = whatNameIsTheShip(input);
+        int startActivity = whenStartActivityWas(input);
+        Integer endActivity = whenEndActivity(input);
+        String nationality = whatNationalityItIs(input);
+        String description = whatDescription(input);
 
 
-//        Indicate status of vehicle
-        do {
-            System.out.println("Is this vehicle currently active?");
-            System.out.println("1. Yes");
-            System.out.println("2. No");
-            System.out.print("Option:");
-
-            status = Integer.parseInt(input.nextLine());
-            System.out.println(status);
-            if (status != 1 && status != 2) {
-                System.out.println(" - WRITE A VALID OPTION -");
-            }
-        } while (status != 1 && status != 2);
-
-        if (status == 2) {
-            System.out.println("What is the year of end activity");
-            System.out.print("Year: ");
-            endActivity = Integer.parseInt(input.nextLine());
-        }
-
-//        Nationality
-        System.out.println("Write the nationality");
-        System.out.print("Nationality: ");
-        nationality = input.nextLine();
-
-//        Description
-        System.out.println("Add some description");
-        System.out.print("Description:");
-        description = input.nextLine();
-
-//          status = 1 is equal to active
-        if (status == 1) {
+        if (endActivity == null) {
             switch (kindOfShip) {
                 case 1:
                     DataBaseShip.saveShip(new Capsule(name, startActivity, nationality, description));
@@ -162,10 +126,7 @@ public class UiShipMenu {
                     System.out.println("--------------- VEHICLE SAVED -----------------");
                     break;
             }
-        }
-
-        //          status = 1 is equal to active
-        if (status == 2) {
+        } else {
             switch (kindOfShip) {
                 case 1:
                     DataBaseShip.saveShip(new Capsule(name, startActivity, endActivity, nationality, description));
@@ -202,6 +163,7 @@ public class UiShipMenu {
             }
 
         }
+        //Finishing showing the menu again
         shipMenu();
 
     }
@@ -216,6 +178,113 @@ public class UiShipMenu {
         System.out.println();
         DataBaseShip.showShips();
         System.out.println();
+    }
+
+
+//    Methods for create the ship included in the createShip()
+
+    /**
+     * Method that converts Scanner object to String.
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return String name of the ship
+     */
+    private static String whatNameIsTheShip(Scanner input) {
+        System.out.println("Write the name of the vehicle");
+        System.out.print("Name: ");
+        return input.nextLine();
+    }
+
+    /**
+     * Method that converts Scanner object to int.
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return int of 4 digits
+     */
+    private static int whenStartActivityWas(Scanner input) {
+        System.out.println("Write the year of start vehicle");
+        System.out.print("Year: ");
+        return Integer.parseInt(input.nextLine());
+    }
+
+    /**
+     * Method that converts Scanner object to Integer.
+     * <p>
+     * It is validated if the ship is currently active, if so, a null value is returned.
+     * and if it is not active, the year in which it ended is returned
+     * <p>
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return (2022) or (null) if it is not active
+     */
+    private static Integer whenEndActivity(Scanner input) {
+        int answer = 0;
+        do {
+            System.out.println("Is this vehicle currently active?");
+            System.out.println("1. Yes");
+            System.out.println("2. No");
+            System.out.print("Option:");
+            answer = Integer.parseInt(input.nextLine());
+            if (answer != 1 && answer != 2) {
+                System.out.println();
+                System.out.println();
+                System.out.println(" - WRITE A VALID OPTION -");
+            }
+        } while (answer != 1 && answer != 2);
+
+        if (answer == 2) {
+            System.out.println("What is the year of end activity");
+            System.out.print("Year: ");
+            return Integer.parseInt(input.nextLine());
+        }
+        return null;
+    }
+
+    /**
+     * Method that converts Scanner object to String.
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return String of the nationality
+     */
+    private static String whatNationalityItIs(Scanner input) {
+        System.out.println("Write the nationality");
+        System.out.print("Nationality: ");
+        return input.nextLine();
+    }
+
+    /**
+     * Method that converts Scanner object to String.
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return String of the description
+     */
+    private static String whatDescription(Scanner input) {
+        System.out.println("Add some description");
+        System.out.print("Description:");
+        return input.nextLine();
+    }
+
+    /**
+     * Method that converts Scanner object to int.
+     * The main objective of this method is to stack functionality in a more verbal way.
+     *
+     * @param input Scanner object
+     * @return int value that indicate the kind of ship
+     */
+    private static int whatKindOfShip(Scanner input) {
+        System.out.println("Select the type of vehicle to create");
+        System.out.println("1. Capsule ");
+        System.out.println("2. Manned Spaceship ");
+        System.out.println("3. Space shuttle");
+        System.out.println("4. Unmanned SpaceShip");
+        System.out.print("Option: ");
+        return Integer.parseInt(input.nextLine());
+
     }
 
 }
