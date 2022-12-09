@@ -40,8 +40,7 @@ public class UiHome {
                     System.out.println("Support: support@camilo.com");
                     break;
                 case 4:
-                    System.out.println();
-                    System.out.println();
+                    clearView();
                     System.out.println("Program closed, come back soon [zzz]");
                     response = 0;
                     break;
