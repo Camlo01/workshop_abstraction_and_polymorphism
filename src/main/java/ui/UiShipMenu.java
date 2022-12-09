@@ -25,28 +25,39 @@ public class UiShipMenu {
 
             switch (response) {
                 case 1:
+//                    1. Create a spacecraft
                     UiHome.clearView();
                     createShip();
                     response = 0;
                     break;
                 case 2:
+//                    2. See ships
                     UiHome.clearView();
                     viewShips();
-                    System.out.println("4. To see the menu again");
+                    System.out.println("5. To see the menu again");
                     System.out.print("Option: ");
                     break;
                 case 3:
+//                    3. Use a ship
+                    UiHome.clearView();
+                    useSomeShip();
+                    response = 0;
+                    break;
+                case 4:
+//                    4. Back to home
                     UiHome.clearView();
                     UiHome.showMenu();
                     response = 0;
                     break;
-                case 4:
+                case 5:
+//                    5. To see the menu again
                     UiHome.clearView();
                     shipMenuBody();
                     break;
                 default:
+//                    Something wrong
                     UiHome.clearView();
-                    System.out.println("4. To see the menu again");
+                    System.out.println("5. To see the menu again");
                     System.out.println("Try to enter a correct option [?]");
                     System.out.print("Option: ");
             }
@@ -57,12 +68,13 @@ public class UiShipMenu {
 
     private static void shipMenuBody() {
         System.out.println();
-        System.out.println("------------------ 1. Ship --------------------");
+        System.out.println("---------------- 1. Ship Menu -----------------");
         System.out.println("- What do you want to do");
         System.out.println("---");
         System.out.println("1. Create a spacecraft");
         System.out.println("2. See ships");
-        System.out.println("3. Back to home");
+        System.out.println("3. Use a ship");
+        System.out.println("4. Back to home");
         System.out.println();
         System.out.print("Option: ");
 
@@ -178,6 +190,87 @@ public class UiShipMenu {
         System.out.println();
         DataBaseShip.showShips();
         System.out.println();
+    }
+
+    public static void useSomeShip() {
+        useSomeShipBody();
+
+        Scanner input = new Scanner(System.in);
+        System.out.print("Ship: ");
+
+        int shipToGet = Integer.parseInt(input.nextLine());
+
+        Spacecraft shipToUse = DataBaseShip.getShipByIndex(shipToGet);
+
+        UiHome.clearView();
+        useShip(shipToUse);
+
+
+    }
+
+    public static void useSomeShipBody() {
+        System.out.println("-------------- 3. SELECT A SHIP --------------- ");
+        System.out.println();
+        DataBaseShip.showShips();
+        System.out.println();
+        System.out.println("Select a ship by it index");
+
+    }
+
+    public static void useShip(Spacecraft ship) {
+        int response = 0;
+
+        useShipBody(ship);
+        do {
+            Scanner input = new Scanner(System.in);
+            System.out.print("Option: ");
+
+            response = Integer.parseInt(input.nextLine());
+
+            switch (response) {
+                case 1:
+//                    1. Get information complete of this ship
+                    UiHome.clearView();
+                    System.out.println(ship.getShipInfo());
+                    System.out.println("4. See again the menu");
+                    break;
+                case 2:
+//                    2. Show less information on a single line
+                    UiHome.clearView();
+                    System.out.println(ship.getShipInfoInline());
+                    System.out.println("4. See again the menu");
+                    break;
+                case 3:
+//                    3. Comeback to home
+                    UiHome.clearView();
+                    UiHome.showMenu();
+                    response = 0;
+                    break;
+                case 4:
+//                    4. See again the menu
+                    UiHome.clearView();
+                    useShipBody(ship);
+                    break;
+                default:
+//                    If enter wrong option
+                    UiHome.clearView();
+                    System.out.println("4. See again the menu");
+                    System.out.println("Try to enter a correct option [?]");
+                    System.out.print("Option: ");
+
+            }
+
+        } while (response != 0);
+
+    }
+
+    public static void useShipBody(Spacecraft ship) {
+        System.out.println("--- What do you want to do with the spaceship " + ship.getName() + "?");
+        System.out.println("1. Get information complete of this ship");
+        System.out.println("2. Show less information on a single line");
+        System.out.println("3. Comeback to home");
+        System.out.println();
+
     }
 
 
