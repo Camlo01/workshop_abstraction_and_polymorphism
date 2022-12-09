@@ -36,6 +36,10 @@ public class DataBaseShip {
         }
     }
 
+    public static Spacecraft getShipByIndex(int index) {
+        return ships.get(index - 1);
+    }
+
 
     /**
      * Items automatically saved to not leave the database empty
