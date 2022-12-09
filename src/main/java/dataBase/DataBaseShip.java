@@ -29,13 +29,10 @@ public class DataBaseShip {
     }
 
     public static void showShips() {
-        try {
-            ships.forEach((ship) -> {
-                System.out.println(ship.getShipInfoInline());
-            });
-
-        } catch (Exception exception) {
-            System.out.println("Error: " + exception);
+        int limit = ships.size();
+        for (int i = 0; i < limit; i++) {
+            Integer listItem = i + 1;
+            System.out.println(listItem + ". " + (ships.get(i)).getShipInfoInline());
         }
     }
 
