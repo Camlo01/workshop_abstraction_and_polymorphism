@@ -74,7 +74,7 @@ public class UiShipMenu {
         System.out.println("1. Create a spacecraft");
         System.out.println("2. See ships");
         System.out.println("3. Use a ship");
-        System.out.println("4. Back to home");
+        System.out.println("4. Back home");
         System.out.println();
         System.out.print("Option: ");
 
@@ -241,7 +241,7 @@ public class UiShipMenu {
                     System.out.println("4. See again the menu");
                     break;
                 case 3:
-//                    3. Comeback to home
+//                    3. Back home
                     UiHome.clearView();
                     UiHome.showMenu();
                     response = 0;
@@ -268,7 +268,7 @@ public class UiShipMenu {
         System.out.println("--- What do you want to do with the spaceship " + ship.getName() + "?");
         System.out.println("1. Get information complete of this ship");
         System.out.println("2. Show less information on a single line");
-        System.out.println("3. Comeback to home");
+        System.out.println("3. Back home");
         System.out.println();
 
     }
