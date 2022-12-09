@@ -8,13 +8,13 @@ package model;
  */
 public abstract class Spacecraft implements Ship, Radio {
 
-    private String name;
-    private int startActivity;
-    private Integer endActivity;
-    private String nationality;
-    private boolean statusActive;
-    private String description;
-    private int speed;
+    protected String name;
+    protected int startActivity;
+    protected Integer endActivity;
+    protected String nationality;
+    protected boolean statusActive;
+    protected String description;
+    protected int speed;
 
 //    Constructors
 
@@ -124,8 +124,13 @@ public abstract class Spacecraft implements Ship, Radio {
     }
 
     @Override
-    public void takeOffShip() {
-        System.out.println("the ship takes off");
+    public void detachCapsule() {
+        System.out.println("capsule detached to the ship");
+    }
+
+    @Override
+    public void attachCapsule() {
+        System.out.println("capsule attached to the ship");
     }
 
     @Override
@@ -143,7 +148,7 @@ public abstract class Spacecraft implements Ship, Radio {
     public String getShipInfo() {
         return "--------------- Information ---------------\n" +
                 "Name: " + name + "\n" +
-                "Start Activity: " + name + "\n" +
+                "Start Activity: " + startActivity + "\n" +
                 (statusActive ? " - The ship is currently active -  " : "End Activity: " + endActivity) + "\n" +
                 "Nationality: " + nationality + "\n" +
                 "Description: " + description + "\n";
