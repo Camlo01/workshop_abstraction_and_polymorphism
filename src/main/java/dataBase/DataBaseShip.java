@@ -17,8 +17,8 @@ public class DataBaseShip {
     public static void saveShip(Spacecraft ship) {
         try {
             ships.add(ship);
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception exception) {
+            System.out.println("Error: " + exception);
         }
     }
 
@@ -34,8 +34,8 @@ public class DataBaseShip {
                 System.out.println(ship.getShipInfoInline());
             });
 
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception exception) {
+            System.out.println("Error: " + exception);
         }
     }
 
