@@ -34,7 +34,7 @@ public class UiShipMenu {
 //                    2. See ships
                     UiHome.clearView();
                     viewShips();
-                    System.out.println("5. To see the menu again");
+                    System.out.println("6. To see the menu again");
                     System.out.print("Option: ");
                     break;
                 case 3:
@@ -44,20 +44,25 @@ public class UiShipMenu {
                     response = 0;
                     break;
                 case 4:
-//                    4. Back to home
+//                    4. Delete a ship
+                    UiHome.clearView();
+                    deleteShip();
+                    break;
+                case 5:
+//                    5. Back to home
                     UiHome.clearView();
                     UiHome.showMenu();
                     response = 0;
                     break;
-                case 5:
-//                    5. To see the menu again
+                case 6:
+//                    6. To see the menu again
                     UiHome.clearView();
                     shipMenuBody();
                     break;
                 default:
 //                    Something wrong
                     UiHome.clearView();
-                    System.out.println("5. To see the menu again");
+                    System.out.println("6. To see the menu again");
                     System.out.println("Try to enter a correct option [?]");
                     System.out.print("Option: ");
             }
@@ -74,7 +79,8 @@ public class UiShipMenu {
         System.out.println("1. Create a spacecraft");
         System.out.println("2. See ships");
         System.out.println("3. Use a ship");
-        System.out.println("4. Back home");
+        System.out.println("4. Delete a ship");
+        System.out.println("5. Back home");
         System.out.println();
         System.out.print("Option: ");
 
@@ -184,7 +190,6 @@ public class UiShipMenu {
      * Method that queries the simulated database and displays all the ships it finds
      */
     public static void viewShips() {
-
         System.out.println("------------------ 2. Ships --------------------");
         System.out.println("- List");
         System.out.println();
@@ -205,10 +210,9 @@ public class UiShipMenu {
         UiHome.clearView();
         useShip(shipToUse);
 
-
     }
 
-    public static void useSomeShipBody() {
+    private static void useSomeShipBody() {
         System.out.println("-------------- 3. SELECT A SHIP --------------- ");
         System.out.println();
         DataBaseShip.showShips();
@@ -217,7 +221,7 @@ public class UiShipMenu {
 
     }
 
-    public static void useShip(Spacecraft ship) {
+    private static void useShip(Spacecraft ship) {
         int response = 0;
 
         useShipBody(ship);
@@ -264,13 +268,82 @@ public class UiShipMenu {
 
     }
 
-    public static void useShipBody(Spacecraft ship) {
+    private static void useShipBody(Spacecraft ship) {
         System.out.println("--- What do you want to do with the spaceship " + ship.getName() + "?");
         System.out.println("1. Get information complete of this ship");
         System.out.println("2. Show less information on a single line");
         System.out.println("3. Back home");
         System.out.println();
 
+    }
+
+    private static void deleteShip() {
+        Scanner input = new Scanner(System.in);
+        int response = 0;
+        int shipToDelete = 0;
+        deleteShipBody();
+        System.out.print("Delete the ship: ");
+
+        do {
+            shipToDelete = Integer.parseInt(input.nextLine());
+            boolean resultOperation = DataBaseShip.deleteShip(shipToDelete);
+            System.out.println();
+            if (resultOperation) {
+                System.out.println("----- SUCCESSFUL OPERATION -----");
+                System.out.println();
+                System.out.println("1. Delete another spaceship ");
+                System.out.println("2. Back to spaceship menu");
+                System.out.println("3. Back to home");
+                System.out.println();
+                response = Integer.parseInt(input.nextLine());
+            } else {
+                response = 4;
+            }
+            switch (response) {
+                case 1:
+//                    1. Delete another spaceship
+                    UiHome.clearView();
+                    deleteShipBody();
+                    System.out.print("Spaceship to delete: ");
+                    break;
+                case 2:
+//                    2. Back to spaceship menu
+                    UiHome.clearView();
+                    UiShipMenu.shipMenu();
+                    response = 0;
+                    break;
+                case 3:
+//                    3. Back to home
+                    UiHome.clearView();
+                    UiHome.showMenu();
+                    response = 0;
+                    break;
+                case 4:
+//                    not was possible delete spaceship
+                    System.out.println("This spaceship does not exist");
+                    System.out.println("Try again with a correct spaceship");
+                    System.out.print("Spaceship: ");
+                    break;
+                default:
+                    deleteShipBody();
+                    System.out.println();
+                    System.out.println("Something went wrong");
+                    System.out.println("Verify the number of the ship to delete");
+                    System.out.print("Option: ");
+
+            }
+
+
+        } while (response != 0);
+
+    }
+
+    private static void deleteShipBody() {
+        System.out.println("------------- 4. Delete a ship --------------");
+        System.out.println("-- Select the ship to delete");
+        System.out.println();
+        DataBaseShip.showShips();
+        System.out.println();
     }
 
 
