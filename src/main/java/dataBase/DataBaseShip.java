@@ -36,6 +36,15 @@ public class DataBaseShip {
         }
     }
 
+    public static boolean deleteShip(int shipToDelete) {
+        if (shipToDelete <= ships.size()) {
+            ships.remove(shipToDelete - 1);
+            return true;
+        }
+        return false;
+    }
+
+
     public static Spacecraft getShipByIndex(int index) {
         return ships.get(index - 1);
     }
